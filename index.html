@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUJAPATH — Roadmap to Puja · Kolkata Durga Puja Planner</title>
+<meta name="description" content="AI-powered Kolkata Durga Puja discovery and trip planning. Tell us your plan in plain words; get a complete roadmap — pandals, food, transport, safety, and everything around you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E4002B'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='serif' font-weight='bold'%3E%E0%A6%AA%E0%A7%81%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="alpona-band"></div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand" onclick="go('home')">
+      <div class="brand-mark">পু</div>
+      <div>
+        <span class="brand-name">PUJA<em>PATH</em></span>
+        <span class="brand-bn">পুজোপথ — roadmap to Puja</span>
+      </div>
+    </div>
+    <nav class="topnav">
+      <button class="nav-link active" data-view="home">Plan</button>
+      <button class="nav-link" data-view="roadmap">My Roadmap</button>
+      <button class="nav-link" data-view="explore">Explore Puja</button>
+      <button class="nav-link" data-view="about">About &amp; Safety</button>
+    </nav>
+    <span class="countdown" id="countdown"></span>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================================ HOME ================================ -->
+  <section id="view-home" class="view active">
+    <div class="hero">
+      <span class="hero-kicker">Kolkata · Sharodiya 2026</span>
+      <h1>PUJA<span class="r">PATH</span></h1>
+      <p class="hero-bn">আপনার পুজো, আপনার পথ — কলকাতার আসল উৎসবটা খুঁজে নিন</p>
+      <p class="hero-tag">Plan Your Puja. <b>Find Your Path.</b> Experience Kolkata.</p>
+      <p class="hero-sub">Not just the pandals everyone knows — the full spectrum of the festival: famous majors,
+        neighbourhood barowaris, bonedi-bari courtyards, tiny para lanes, food, transport and everything around you.</p>
+    </div>
+
+    <div class="planner-shell">
+      <div class="entry-tabs">
+        <button class="entry-tab active" data-pane="pane-ai">✨ Tell us your plan</button>
+        <button class="entry-tab" data-pane="pane-form">🗺️ Build your plan</button>
+      </div>
+
+      <!-- AI planner -->
+      <div class="entry-pane active" id="pane-ai">
+        <p class="ai-label">Describe your Puja, in your own words</p>
+        <p class="ai-hint">Who's going, from where, till when, what you're craving. No forms needed — just talk.</p>
+        <textarea id="ai-box" placeholder="We are 6 friends, starting from Salt Lake at 4 PM. We want to explore as many interesting pandals as possible, eat dinner somewhere good and finish near Howrah by 11 PM."></textarea>
+        <div id="ai-chips"></div>
+        <div class="ai-foot">
+          <button class="btn primary big" id="ai-run">CREATE MY PUJA ROADMAP</button>
+          <span class="form-note">Runs entirely in your browser — nothing is uploaded.</span>
+        </div>
+        <div class="ai-examples">
+          <button class="ex-fill" data-q="We are 7 college friends. We want to start around 5 PM, explore South Kolkata, see as many pandals as possible, stop somewhere for biryani, and reach Garia by 11.">7 friends · South Kolkata · biryani · Garia by 11</button>
+          <button class="ex-fill" data-q="I have four hours and want a relaxed Puja evening with my parents, good food and less crowded places.">4 relaxed hours with parents, less crowded</button>
+          <button class="ex-fill" data-q="Couple, starting at Esplanade around 4 pm on Ashtami. Want to see bonedi bari heritage and old Kolkata, dinner at a Bengali restaurant, end near Kalighat by 10.">Bonedi bari heritage evening · Ashtami</button>
+          <button class="ex-fill" data-q="Solo, full day from 10 am to 11 pm, start Sealdah, hidden gems and local para pujas of North Kolkata, puchka in the evening, end at Shyambazar.">Solo hidden-gem marathon · North Kolkata</button>
+        </div>
+      </div>
+
+      <!-- structured form -->
+      <div class="entry-pane" id="pane-form">
+        <form class="form-grid" onsubmit="return false">
+          <div class="fg wide2"><label>Starting point</label><input id="f-start" list="dl-landmarks" placeholder="e.g. Howrah Station, Salt Lake, Gariahat"></div>
+          <div class="fg wide2"><label>Ending point <i style="color:var(--muted);font-weight:400">(optional — leave blank for open-ended)</i></label><input id="f-end" list="dl-landmarks" placeholder="e.g. Garia, Sealdah"></div>
+          <div class="fg"><label>Puja day</label><select id="f-day"></select></div>
+          <div class="fg"><label>Start time</label><input id="f-stime" type="time" value="17:00"></div>
+          <div class="fg"><label>End time</label><input id="f-etime" type="time" value="23:00"></div>
+          <div class="fg"><label>Group size</label><input id="f-size" type="number" min="1" max="30" value="4"></div>
+          <div class="fg"><label>Travelling with</label>
+            <select id="f-type"><option value="friends">Friends</option><option value="family">Family / parents</option><option value="couple">Couple</option><option value="solo">Solo</option></select>
+          </div>
+          <div class="fg wide2"><label>Pace</label>
+            <div class="chipset">
+              <label><input type="radio" name="f-pace" value="packed"><span>Packed — fit in the most</span></label>
+              <label><input type="radio" name="f-pace" value="balanced" checked><span>Balanced</span></label>
+              <label><input type="radio" name="f-pace" value="relaxed"><span>Relaxed</span></label>
+            </div>
+          </div>
+          <div class="fg wide2"><label>Interests</label>
+            <div class="chipset">
+              <label><input type="checkbox" name="f-int" value="major"><span>Famous majors</span></label>
+              <label><input type="checkbox" name="f-int" value="theme"><span>Theme &amp; art</span></label>
+              <label><input type="checkbox" name="f-int" value="heritage"><span>Bonedi heritage</span></label>
+              <label><input type="checkbox" name="f-int" value="local"><span>Local barowaris</span></label>
+              <label><input type="checkbox" name="f-int" value="community"><span>Community paras</span></label>
+              <label><input type="checkbox" name="f-int" value="hidden"><span>Hidden gems</span></label>
+              <label><input type="checkbox" name="f-int" value="photo"><span>Photo spots</span></label>
+            </div>
+          </div>
+          <div class="fg wide2"><label>Food cravings</label>
+            <div class="chipset green">
+              <label><input type="checkbox" name="f-food" value="biryani"><span>Biryani</span></label>
+              <label><input type="checkbox" name="f-food" value="bengali"><span>Bengali</span></label>
+              <label><input type="checkbox" name="f-food" value="street"><span>Street food</span></label>
+              <label><input type="checkbox" name="f-food" value="rolls"><span>Rolls</span></label>
+              <label><input type="checkbox" name="f-food" value="chinese"><span>Chinese</span></label>
+              <label><input type="checkbox" name="f-food" value="sweets"><span>Mishti</span></label>
+              <label><input type="checkbox" name="f-food" value="cafe"><span>Café</span></label>
+            </div>
+          </div>
+          <div class="fg wide2"><label>Meals to include</label>
+            <div class="chipset green">
+              <label><input type="checkbox" name="f-meal" value="breakfast"><span>Breakfast</span></label>
+              <label><input type="checkbox" name="f-meal" value="lunch"><span>Lunch</span></label>
+              <label><input type="checkbox" name="f-meal" value="snacks"><span>Snacks</span></label>
+              <label><input type="checkbox" name="f-meal" value="dinner" checked><span>Dinner</span></label>
+              <label><input type="checkbox" id="f-veg"><span>Veg only</span></label>
+              <label><input type="checkbox" id="f-crowd"><span>Avoid heavy crowds</span></label>
+            </div>
+          </div>
+          <div class="fg wide2"><label>Transport you're happy with</label>
+            <div class="chipset">
+              <label><input type="checkbox" id="m-walk" checked><span>Walk</span></label>
+              <label><input type="checkbox" id="m-auto" checked><span>Auto / cab</span></label>
+              <label><input type="checkbox" id="m-bus" checked><span>Bus</span></label>
+              <label><input type="checkbox" id="m-metro" checked><span>Metro</span></label>
+              <label><input type="checkbox" id="m-train" checked><span>Local train</span></label>
+            </div>
+          </div>
+          <div class="fg wide2"><label>Must-visit pandals <i style="color:var(--muted);font-weight:400">(comma separated)</i></label><input id="f-must" list="dl-pandals" placeholder="e.g. Badamtala Ashar Sangha, Maddox Square"></div>
+          <div class="fg wide4 form-foot">
+            <button class="btn primary big" id="f-run">CREATE MY PUJA ROADMAP</button>
+            <span class="form-note">The engine packs in as much as genuinely fits — no arbitrary 5-or-10 stop limit.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="must-strip" class="must-strip hide"></div>
+
+    <div class="philosophy">
+      <blockquote>“Don't just visit the pandals everyone knows.<br>Discover the Puja that <b>Kolkata actually lives.</b>”</blockquote>
+      <cite>— the PUJAPATH principle · famous ≠ better · a tiny para puja can be the best evening of your year</cite>
+    </div>
+
+    <div class="feature-grid">
+      <div class="fcard"><span class="fic" data-ic="spark"></span><h3>Natural-language planner</h3><p>Type what you feel like doing. PUJAPATH turns it into time, route, pandals, transport and food.</p></div>
+      <div class="fcard"><span class="fic" data-ic="diya"></span><h3>A massive Puja database</h3><p>Majors, local barowaris, community paras, bonedi baris and hidden gems — not only the famous five.</p></div>
+      <div class="fcard"><span class="fic" data-ic="nav"></span><h3>Everything around you</h3><p>Every stop comes with nearby rail, metro, food, hospitals, markets and other pujas.</p></div>
+      <div class="fcard"><span class="fic" data-ic="users"></span><h3>Group-aware routes</h3><p>College friends, parents, couples — the plan changes pace, comfort and stops to match your people.</p></div>
+      <div class="fcard"><span class="fic" data-ic="train"></span><h3>Transport that makes sense</h3><p>Walk the lanes, metro the corridors, train the long hops — with railway stations highlighted.</p></div>
+      <div class="fcard"><span class="fic" data-ic="food"></span><h3>Food planned in</h3><p>Say “add biryani” and dinner appears on the route without a wild detour.</p></div>
+    </div>
+  </section>
+
+  <!-- ============================== ROADMAP ============================== -->
+  <section id="view-roadmap" class="view">
+    <div id="roadmap-body"></div>
+  </section>
+
+  <!-- ============================== EXPLORE ============================== -->
+  <section id="view-explore" class="view">
+    <div class="explore-head">
+      <p class="sec-kicker">পুরো উৎসব</p>
+      <h2 class="rm-title">Explore the whole festival</h2>
+      <p class="hero-sub" style="margin-left:0">The most complete Puja discovery database we could assemble — famous majors, neighbourhood barowaris, bonedi-bari courtyards, tiny community pujas and hidden gems. Listings marked <span class="tag demo">demo</span> are community-suggested and approximate.</p>
+    </div>
+    <div id="explore-body"></div>
+  </section>
+
+  <!-- =============================== ABOUT =============================== -->
+  <section id="view-about" class="view">
+    <div class="explore-head">
+      <p class="sec-kicker">পরিচিতি ও নিরাপত্তা</p>
+      <h2 class="rm-title">About &amp; Safety</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>What PUJAPATH is</h3>
+        <p>PUJAPATH answers one question: <b>“I have a group, some time, and an idea of what I want — plan the entire Puja experience for me.”</b></p>
+        <p>Tell it in plain words — <i>“we are 7 college friends, start 5 PM, South Kolkata, biryani somewhere, Garia by 11”</i> — and it builds a realistic, chronological roadmap: start → pandal → small local puja → food → event → famous pandal → station → end.</p>
+        <p>The route engine weighs distance, travel time, visit durations, crowd levels, meal windows, group type and transport options. It fits as much as <b>genuinely fits</b> — never an arbitrary cap.</p>
+        <h3 style="margin-top:18px">Honest data</h3>
+        <p>This is a demo dataset compiled from widely published public knowledge. <b>Coordinates, durations, crowd estimates and nearby services are approximate.</b> Listings flagged <span class="tag demo">demo</span> are community-suggested. Nothing here replaces local verification — pandal timings, road closures and train schedules change during the festival.</p>
+      </div>
+      <div class="about-card">
+        <h3>Festival etiquette</h3>
+        <p>· Bonedi baris are family homes — be quiet, dress modestly, ask before photographing.</p>
+        <p>· Anjali time (mornings, especially Ashtami) is for devotees — visit decoratively in the evenings.</p>
+        <p>· Keep your group's meeting point fixed before entering a famous pandal's crowd.</p>
+        <p>· Carry water, a power bank and some cash — many lanes and food rows are cash-only.</p>
+        <p>· On Dashami evening, avoid the ghats' approach roads unless you are going for bhashan.</p>
+        <h3 style="margin-top:18px">Contribute</h3>
+        <p>Know a para puja the internet has never heard of? That's exactly what this database exists for. Community-suggested listings are clearly labelled as approximate until verified.</p>
+      </div>
+    </div>
+    <div class="safety-wrap">
+      <h3 class="around-title">Safety &amp; emergency directory</h3>
+      <div id="safety-list"></div>
+    </div>
+  </section>
+
+</main>
+
+<div class="alpona-band"></div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">PUJA<em>PATH</em></div>
+    <p class="footer-bn">শুভ শারদোৎসব — ভালো কাটুক, নিরাপদে কাটুক</p>
+    <p class="footer-note"><b>Demo dataset.</b> Locations, timings and services are approximate and compiled from public knowledge; verify locally. Emergency: Police <b>100</b> · Ambulance <b>102/108</b> · Fire <b>101</b>.</p>
+  </div>
+</footer>
+
+<!-- detail sheet -->
+<div id="sheet" role="dialog" aria-modal="true">
+  <div class="sheet-panel">
+    <button id="sheet-close" aria-label="Close">✕</button>
+    <div id="sheet-body"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<datalist id="dl-landmarks"></datalist>
+<datalist id="dl-pandals"></datalist>
+
+<script src="js/data.js"></script>
+<script src="js/planner.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
