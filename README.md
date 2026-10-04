@@ -48,27 +48,11 @@ PUJAPATH blends **old Kolkata Bonedi Bari Puja** with a modern, premium digital 
     └── app.js        # UI rendering, routing between views, map, refine bar
 ```
 
-## 🚀 Getting Started
-
-No installation required. Just open `index.html` in a browser, or serve it locally:
-
-```powershell
-# Python
-python -m http.server 8000
-
-# Node (npx)
-npx serve .
-```
-
-Then visit `http://localhost:8000`.
-
 ## 🌐 Deploying Live
 
-Since the project is fully static, you can deploy it free in seconds:
+The deployment for this project is done by:
 
-- **Netlify** — drag the project folder onto https://app.netlify.com/drop
-- **Vercel** — `npx vercel` inside the project folder
-- **GitHub Pages** — push to a repo and enable Pages in Settings
+- **Vercel** —
 
 ## ⚠️ Data Disclaimer
 
