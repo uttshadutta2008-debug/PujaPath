@@ -34,7 +34,7 @@ PUJAPATH blends **old Kolkata Bonedi Bari Puja** with a modern, premium digital 
 
 - **HTML / CSS / Vanilla JavaScript** — no build step, no backend
 - **Leaflet + OpenStreetMap** — interactive map
-- All planning logic runs **client-side** in the browser (heuristics, not live data)
+- All planning logic runs **client-side** in the browser
 
 ## 📁 Project Structure
 
